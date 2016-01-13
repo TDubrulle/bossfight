@@ -7,21 +7,21 @@ public class PlayerAttack : MonoBehaviour {
     private bool canMove = true;
     private PlayerControler pc;
     private PlayerGrab pg;
+    private Animator anim;
 
 	// Use this for initialization
 	void Start () {
         pc = this.gameObject.GetComponent<PlayerControler>();
         pg = this.gameObject.GetComponent<PlayerGrab>();
+        anim = this.gameObject.GetComponent<Animator>();
 	}
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
-
     }
 
-    void OnCollisionExit(Collision col)
+    void OnTriggerExit(Collider col)
     {
-
     }
 
     public void cantMove()
@@ -33,23 +33,36 @@ public class PlayerAttack : MonoBehaviour {
     {
         canMove = true;
     }
+
+    public void attackEnd(string msg)
+    {
+        if (msg == "endAttack")
+            attacking = false;
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 	    
         if(canMove)
         {
             if(Input.GetButtonDown("Attack"))
             {
-                //pc.cantMove();
-                //pg.cantMove();
+                pc.stopMovement();
+                pc.cantDoAnAction();
+                pg.cantMove();
+
+                anim.SetBool("attacking", true);
 
                 attacking = true;
             }
 
             if(!attacking)
             {
-                pc.freeMove();
+
+                anim.SetBool("attacking", false);
+
+                pc.freeAction();
                 pg.freeMove();
             }
         }
