@@ -1,2 +1,0 @@
-# bossfight
-Boss fight project
