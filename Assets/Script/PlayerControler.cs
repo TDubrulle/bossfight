@@ -12,6 +12,7 @@ public class PlayerControler : MonoBehaviour {
     private bool isCrouched = false;
     private bool sliding = false;
     private bool canMove = true;
+    private bool canDoAction = true;
     private Vector3 moveDirection = Vector3.zero;
     private CapsuleCollider mCollider;
     private CharacterController controller;
@@ -41,9 +42,24 @@ public class PlayerControler : MonoBehaviour {
         canMove = false;
     }
 
+    public void cantDoAnAction()
+    {
+        canDoAction = false;
+    }
+
+    public void stopMovement()
+    {
+        moveDirection = new Vector3(0, 0, 0);
+    }
+
     public void freeMove()
     {
         canMove = true;
+    }
+
+    public void freeAction()
+    {
+        canDoAction = true;
     }
 
     void Start()
@@ -56,51 +72,50 @@ public class PlayerControler : MonoBehaviour {
     {
         if (canMove)
         {
-            // is the controller on the ground?
-            if (controller.isGrounded)
+            if (canDoAction)
             {
-                //Feed moveDirection with input.
-                moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                moveDirection = transform.TransformDirection(moveDirection);
-
-                //Multiply it by speed.
-                moveDirection *= speed;
-
-                playerAnimator.SetFloat("SpeedPlayer", moveDirection.magnitude * Time.deltaTime);
-
-                //Jumping
-                playerAnimator.SetBool("jumping", false);
-                if (Input.GetButton("Jump") && !sliding)
+                // is the controller on the ground?
+                if (controller.isGrounded)
                 {
-                    playerAnimator.SetBool("jumping", true);
-                    moveDirection.y = jumpSpeed;
-                }
+                    //Feed moveDirection with input.
+                    moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                    moveDirection = transform.TransformDirection(moveDirection);
 
-                if (Input.GetButtonDown("Crouch"))
-                {
-                    /*isCrouched = !isCrouched;
+                    //Multiply it by speed.
+                    moveDirection *= speed;
 
-                    if (isCrouched)
+                    playerAnimator.SetFloat("SpeedPlayer", moveDirection.magnitude * Time.deltaTime);
+
+                    //Jumping
+                    playerAnimator.SetBool("jumping", false);
+                    if (Input.GetButton("Jump") && !sliding)
                     {
-                        speed /= 3;
-                        mCollider.height = mCollider.height / heightReduc;
-                        mCollider.center = mCollider.center / heightReduc;
-                        this.gameObject.transform.Translate(0, -(mCollider.height / heightReduc), 0);
-                        this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y / heightReduc, this.transform.localScale.z);
+                        playerAnimator.SetBool("jumping", true);
+                        moveDirection.y = jumpSpeed;
                     }
-                    else
-                    {
-                        speed *= 3;
-                        mCollider.height = mCollider.height * heightReduc;
-                        mCollider.center = mCollider.center * heightReduc;
-                        this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y * heightReduc, this.transform.localScale.z);
-                    }*/
-                }
 
-            }
-            else
-            {
-                playerAnimator.SetBool("jumping", true);
+                    if (Input.GetButtonDown("Crouch"))
+                    {
+                        /*isCrouched = !isCrouched;
+
+                        if (isCrouched)
+                        {
+                            speed /= 3;
+                            mCollider.height = mCollider.height / heightReduc;
+                            mCollider.center = mCollider.center / heightReduc;
+                            this.gameObject.transform.Translate(0, -(mCollider.height / heightReduc), 0);
+                            this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y / heightReduc, this.transform.localScale.z);
+                        }
+                        else
+                        {
+                            speed *= 3;
+                            mCollider.height = mCollider.height * heightReduc;
+                            mCollider.center = mCollider.center * heightReduc;
+                            this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y * heightReduc, this.transform.localScale.z);
+                        }*/
+                    }
+
+                }
             }
 
             //Applying gravity to the controller
