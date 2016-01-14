@@ -6,26 +6,41 @@ public class MenuScript : MonoBehaviour
 {
     public GameObject credits;
     public GameObject mainMenu;
-    
+    public GameObject inGame;
+    public GameObject controls;
+
     public void hideAll()
     {
         credits.SetActive(false);
         mainMenu.SetActive(false);
+        inGame.SetActive(false);
+        controls.SetActive(false);
     }
 
-    public void onClickBack()
+    public void onClickBackToMenu()
     {
         hideAll();
-        mainMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+    public void onClickBackToGame()
+    {
+        hideAll();
+        inGame.SetActive(true);
     }
     public void onClickPlay()
     {
         hideAll();
+        inGame.SetActive(true);
     }
     public void onClickCredits()
     {
         hideAll();
-        credits.SetActive(false);
+        credits.SetActive(true);
+    }
+    public void onClickControls()
+    {
+        hideAll();
+        controls.SetActive(true);
     }
     public void onClickExit()
     {
