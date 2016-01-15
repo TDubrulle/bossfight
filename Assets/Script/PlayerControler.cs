@@ -9,7 +9,7 @@ public class PlayerControler : MonoBehaviour {
     public float heightReduc = 2.0f;
     public int angleSlide = 55;
     public Animator playerAnimator;
-    private bool isCrouched = false;
+    //private bool isCrouched = false;
     private bool sliding = false;
     private bool canMove = true;
     private bool canDoAction = true;

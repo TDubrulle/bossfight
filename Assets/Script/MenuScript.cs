@@ -8,6 +8,7 @@ public class MenuScript : MonoBehaviour
     public GameObject mainMenu;
     public GameObject inGame;
     public GameObject controls;
+    public GameObject win;
 
     public void hideAll()
     {
@@ -15,6 +16,7 @@ public class MenuScript : MonoBehaviour
         mainMenu.SetActive(false);
         inGame.SetActive(false);
         controls.SetActive(false);
+        win.SetActive(false);
     }
 
     public void onClickBackToMenu()
@@ -45,5 +47,10 @@ public class MenuScript : MonoBehaviour
     public void onClickExit()
     {
         Application.Quit();
+    }
+    public void onClickBackToPlayAgain()
+    {
+        hideAll();
+        mainMenu.SetActive(true);
     }
 }
