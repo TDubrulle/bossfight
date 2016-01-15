@@ -7,7 +7,7 @@ public class Gliding : MonoBehaviour {
     public float maxDelayRotation = 15;
     public float minStopInAir = 1;
     public float maxStopInAir = 5;
-    public bool secondStep = true;
+    public bool secondStep = false;
     public float turnSpeed = 0.05f;
     private bool beginStop = true;
     private Quaternion maxAngle = Quaternion.Euler(new Vector3(90, 0, 0));

@@ -78,7 +78,7 @@ public class PlayerControler : MonoBehaviour {
                 if (controller.isGrounded)
                 {
                     //Feed moveDirection with input.
-                    moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                    moveDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
                     moveDirection = transform.TransformDirection(moveDirection);
 
                     //Multiply it by speed.
@@ -123,6 +123,7 @@ public class PlayerControler : MonoBehaviour {
 
             //Making the character move
             controller.Move(moveDirection * Time.deltaTime);
+            this.gameObject.transform.Rotate(new Vector3(0, Input.GetAxis("Horizontal") * speed, 0));
         }
     }
 }
