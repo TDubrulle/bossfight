@@ -45,7 +45,6 @@ public class Gliding : MonoBehaviour {
                 switch(rotationSelected)
                 {
                     case rotationWay.left:
-                        Debug.Log("left");
                         if (this.transform.rotation.x < maxAngle.x && this.transform.rotation.x > -maxAngle.x && beginStop)
                         {
                             rotation *= Quaternion.Euler(1, 0, 0);
@@ -76,7 +75,6 @@ public class Gliding : MonoBehaviour {
                         }
                         break;
                     case rotationWay.right:
-                        Debug.Log("right");
                         if (this.transform.rotation.x < maxAngle.x && this.transform.rotation.x > -maxAngle.x && beginStop)
                         {
                             rotation *= Quaternion.Euler(-1, 0, 0);

@@ -8,6 +8,10 @@ public class PlayerAttack : MonoBehaviour {
     private PlayerControler pc;
     private PlayerGrab pg;
     private Animator anim;
+    private Collider weakPoint = null;
+    private int timesHit = 0;
+    private bool secondStep = false;
+    private bool deadStep = false;
 
 	// Use this for initialization
 	void Start () {
@@ -18,10 +22,18 @@ public class PlayerAttack : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        if (col.tag == "WeakPoint")
+        {
+            weakPoint = col;
+        }
     }
 
     void OnTriggerExit(Collider col)
     {
+        if (col.tag == "WeakPoint")
+        {
+            weakPoint = null;
+        }
     }
 
     public void cantMove()
@@ -38,6 +50,16 @@ public class PlayerAttack : MonoBehaviour {
     {
         if (msg == "endAttack")
             attacking = false;
+
+        if(secondStep)
+        {
+            weakPoint.GetComponentInParent<ChangePhase>().hitAlduinFirstTime();
+        }
+
+        if(deadStep)
+        {
+            weakPoint.GetComponentInParent<ChangePhase>().hitAlduinSecondTime();
+        }
     }
 	
 	// Update is called once per frame
@@ -46,7 +68,7 @@ public class PlayerAttack : MonoBehaviour {
 	    
         if(canMove)
         {
-            if(Input.GetButtonDown("Attack"))
+            if(Input.GetButtonDown("Attack") && !attacking)
             {
                 pc.stopMovement();
                 pc.cantDoAnAction();
@@ -55,6 +77,21 @@ public class PlayerAttack : MonoBehaviour {
                 anim.SetBool("attacking", true);
 
                 attacking = true;
+
+                if(weakPoint != null)
+                {
+                    if(timesHit == 1)
+                    {
+                        deadStep = true;
+                        timesHit++;
+                    }
+
+                    if(timesHit == 0)
+                    {
+                        secondStep = true;
+                        timesHit++; 
+                    }
+                }
             }
 
             if(!attacking)
