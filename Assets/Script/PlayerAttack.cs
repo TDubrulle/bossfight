@@ -62,7 +62,7 @@ public class PlayerAttack : MonoBehaviour {
         if(secondStep)
         {
             weakPoint.GetComponentInParent<ChangePhase>().hitAlduinFirstTime();
-            this.transform.position = initPos;
+            //this.transform.position = initPos;
             this.transform.rotation = initRot;
         }
 
@@ -93,6 +93,7 @@ public class PlayerAttack : MonoBehaviour {
                     if(timesHit == 1)
                     {
                         deadStep = true;
+                        secondStep = false;
                         timesHit++;
                     }
 
