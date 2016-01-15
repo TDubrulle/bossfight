@@ -1,31 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerGrab : MonoBehaviour {
+public class PlayerGrab : MonoBehaviour
+{
 
     public int maxStamina = 2000;
     private int stamina;
     private bool hanging = false;
-    private int canHangItself = 0;
     private bool canMove = true;
+    public float gravity = 20.0F;
     private PlayerControler pc;
     private PlayerAttack pa;
     private Animator anim;
+    private Collider colHang = null;
+    private Quaternion initialRot;
 
-	// Use this for initialization
-	void Start () {
+    void Awake()
+    {
+        initialRot = this.transform.rotation;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
         stamina = maxStamina;
 
         pc = this.gameObject.GetComponent<PlayerControler>();
         pa = this.gameObject.GetComponent<PlayerAttack>();
         anim = this.gameObject.GetComponent<Animator>();
-	}
+    }
 
     void OnTriggerEnter(Collider col)
     {
         if (col.tag == "HangingPoint")
         {
-            canHangItself++;
+            colHang = col;
         }
     }
 
@@ -33,7 +42,7 @@ public class PlayerGrab : MonoBehaviour {
     {
         if (col.tag == "HangingPoint")
         {
-            canHangItself--;
+            colHang = null;
         }
     }
 
@@ -46,14 +55,14 @@ public class PlayerGrab : MonoBehaviour {
     {
         canMove = true;
     }
-	
-	// Update is called once per frame
-	void Update () 
+
+    // Update is called once per frame
+    void Update()
     {
-	    
-        if(canHangItself > 0 && canMove)
+
+        if (colHang != null)
         {
-            if(Input.GetButton("Hang"))
+            if (Input.GetButton("Hang"))
             {
                 pc.cantMove();
                 pa.cantMove();
@@ -62,9 +71,12 @@ public class PlayerGrab : MonoBehaviour {
 
                 hanging = true;
                 stamina--;
+
+                this.gameObject.transform.parent = colHang.gameObject.transform.parent;
+
             }
 
-            if(Input.GetButtonUp("Hang") || stamina == 0 )
+            if (Input.GetButtonUp("Hang") || stamina == 0)
             {
                 hanging = false;
 
@@ -72,13 +84,16 @@ public class PlayerGrab : MonoBehaviour {
 
                 pc.freeMove();
                 pa.freeMove();
+
+                this.gameObject.transform.parent = null;
+                this.transform.rotation = initialRot;
             }
         }
-        
-        if(!hanging && stamina < maxStamina)
+
+        if (!hanging && stamina < maxStamina)
         {
             stamina++;
         }
 
-	}
+    }
 }
