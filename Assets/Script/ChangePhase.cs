@@ -6,15 +6,19 @@ public class ChangePhase : MonoBehaviour
 {
     public Image image;
     private bool startFondue = false;
-
+    public AudioSource dragonScreams;
+    public AudioClip dragonDeathSound;
     public void hitAlduinFirstTime()
     {
         this.gameObject.GetComponentInParent<Gliding>().startSecondPhase();
         startFondue = true;
+        dragonScreams.Play();
     }
     public void hitAlduinSecondTime()
     {
         this.gameObject.GetComponentInParent<Gliding>().secondStep = false;
+        dragonScreams.clip = dragonDeathSound;
+        dragonScreams.Play();
     }
 
     void Update()
