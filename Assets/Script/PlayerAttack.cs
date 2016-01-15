@@ -5,6 +5,8 @@ public class PlayerAttack : MonoBehaviour {
 
     private bool attacking = false;
     private bool canMove = true;
+    private Vector3 initPos;
+    private Quaternion initRot;
     private PlayerControler pc;
     private PlayerGrab pg;
     private Animator anim;
@@ -12,6 +14,12 @@ public class PlayerAttack : MonoBehaviour {
     private int timesHit = 0;
     private bool secondStep = false;
     private bool deadStep = false;
+
+    void Awake()
+    {
+        initPos = this.transform.position;
+        initRot = this.transform.rotation;
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -54,6 +62,8 @@ public class PlayerAttack : MonoBehaviour {
         if(secondStep)
         {
             weakPoint.GetComponentInParent<ChangePhase>().hitAlduinFirstTime();
+            this.transform.position = initPos;
+            this.transform.rotation = initRot;
         }
 
         if(deadStep)

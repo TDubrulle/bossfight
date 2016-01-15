@@ -26,6 +26,12 @@ public class Gliding : MonoBehaviour {
         delayRotation = Random.Range(minDelayRotation, maxDelayRotation);
         rotationSelected = rotationWay.none;
 	}
+
+    public void startSecondPhase()
+    {
+        secondStep = true;
+        startDelayRotation = Time.time;
+    }
 	
 	// Update is called once per frame
 	void Update () {
