@@ -5,6 +5,10 @@ public class PlayerAttack : MonoBehaviour {
 
     private bool attacking = false;
     private bool canMove = true;
+    public AudioClip stepOne;
+    public AudioClip stepTwo;
+    public AudioSource music;
+    public MenuScript menus;
     private Vector3 initPos;
     private Quaternion initRot;
     private PlayerControler pc;
@@ -19,6 +23,8 @@ public class PlayerAttack : MonoBehaviour {
     {
         initPos = this.transform.position;
         initRot = this.transform.rotation;
+        music.clip = stepOne;
+        music.Play();
     }
 
 	// Use this for initialization
@@ -62,13 +68,22 @@ public class PlayerAttack : MonoBehaviour {
         if(secondStep)
         {
             weakPoint.GetComponentInParent<ChangePhase>().hitAlduinFirstTime();
-            //this.transform.position = initPos;
+            this.transform.position = initPos;
             this.transform.rotation = initRot;
+            music.clip = stepTwo;
+            music.Play();
         }
 
         if(deadStep)
         {
             weakPoint.GetComponentInParent<ChangePhase>().hitAlduinSecondTime();
+            menus.winGame();
+            music.Stop();
+            this.transform.position = initPos;
+            this.transform.rotation = initRot;
+            timesHit = 0;
+            secondStep = false;
+            deadStep = false;
         }
     }
 	

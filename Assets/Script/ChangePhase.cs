@@ -8,6 +8,13 @@ public class ChangePhase : MonoBehaviour
     private bool startFondue = false;
     public AudioSource dragonScreams;
     public AudioClip dragonDeathSound;
+    private Quaternion initRot;
+
+    void Awake()
+    {
+        this.transform.rotation = initRot;
+    }
+
     public void hitAlduinFirstTime()
     {
         this.gameObject.GetComponentInParent<Gliding>().startSecondPhase();
@@ -19,6 +26,7 @@ public class ChangePhase : MonoBehaviour
         this.gameObject.GetComponentInParent<Gliding>().secondStep = false;
         dragonScreams.clip = dragonDeathSound;
         dragonScreams.Play();
+        this.transform.rotation = initRot;
     }
 
     void Update()

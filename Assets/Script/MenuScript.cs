@@ -19,6 +19,12 @@ public class MenuScript : MonoBehaviour
         win.SetActive(false);
     }
 
+    public void winGame()
+    {
+        hideAll();
+        win.SetActive(true);
+    }
+
     public void onClickBackToMenu()
     {
         hideAll();
